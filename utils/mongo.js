@@ -1,16 +1,13 @@
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 
-async function connectDB() {
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    })
-    console.log('🟢 Connected to MongoDB')
-  } catch (err) {
-    console.error('🔴 MongoDB connection error:', err)
-  }
-}
+dotenv.config()
+
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => console.log('🟢 Connected to MongoDB'))
+  .catch(err => console.error('🔴 MongoDB connection error:', err))
 
 const PairSchema = new mongoose.Schema({
   number: String,
@@ -20,9 +17,8 @@ const PairSchema = new mongoose.Schema({
 
 const Pair = mongoose.model('Pair', PairSchema)
 
-async function savePairCode(number, code) {
+export async function savePairCode(number, code) {
   const newPair = new Pair({ number, code })
   await newPair.save()
 }
 
-export { connectDB, savePairCode }
