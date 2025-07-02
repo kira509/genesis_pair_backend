@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(''mongodb+srv://cavancinara:oGieKgiloeAs04XR@genesis-cluster.svbkj9v.mongodb.net/?retryWrites=true&w=majority&appName=genesis-cluster'
-', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => console.log('🟢 Connected to MongoDB'))
@@ -21,3 +20,4 @@ async function savePairCode(number, code) {
 }
 
 module.exports = { savePairCode };
+
